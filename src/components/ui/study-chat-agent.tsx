@@ -11,11 +11,9 @@ import {
   BookOpen,
   Sparkles,
   Search,
-  Link,
   ExternalLink,
   BookMarked,
   FileText,
-  BookOpen as BookOpenIcon,
 } from "lucide-react";
 
 interface UseAutoResizeTextareaProps {
@@ -45,43 +43,33 @@ const educationalResources = [
     id: "math-1",
     title: "Algebra Foundations",
     snippet:
-      "Learn the basics of algebra, equations, variables, and functions. Perfect for beginners.",
+      "Learn the basics of algebra, equations, variables, and functions.",
     url: "https://example.com/math/algebra-foundations",
-    keywords: ["math", "algebra", "equations", "variables", "functions"],
+    keywords: ["math", "algebra", "equations", "variables"],
     type: "article",
   },
   {
     id: "math-2",
     title: "Calculus Made Easy",
-    snippet:
-      "Comprehensive guide to differential and integral calculus with step-by-step examples.",
+    snippet: "Comprehensive guide to differential and integral calculus.",
     url: "https://example.com/math/calculus-guide",
-    keywords: ["math", "calculus", "differential", "integral", "limits"],
+    keywords: ["math", "calculus", "differential", "integral"],
     type: "book",
   },
   {
     id: "history-1",
     title: "Ancient Civilizations Timeline",
-    snippet:
-      "Interactive timeline of major ancient civilizations from Mesopotamia to Rome.",
+    snippet: "Interactive timeline of major ancient civilizations.",
     url: "https://example.com/history/ancient-civilizations",
-    keywords: [
-      "history",
-      "ancient",
-      "civilization",
-      "mesopotamia",
-      "rome",
-      "egypt",
-    ],
+    keywords: ["history", "ancient", "civilization", "rome", "egypt"],
     type: "article",
   },
   {
     id: "history-2",
     title: "World War II: A Complete Overview",
-    snippet:
-      "Detailed analysis of causes, major events, and consequences of World War II.",
+    snippet: "Detailed analysis of causes and events of World War II.",
     url: "https://example.com/history/world-war-2",
-    keywords: ["history", "war", "world war", "20th century", "military"],
+    keywords: ["history", "war", "world war", "20th century"],
     type: "document",
   },
   {
@@ -89,65 +77,16 @@ const educationalResources = [
     title: "Introduction to Chemistry",
     snippet: "Learn about atoms, molecules, reactions, and the periodic table.",
     url: "https://example.com/science/intro-chemistry",
-    keywords: ["science", "chemistry", "atoms", "molecules", "periodic table"],
+    keywords: ["science", "chemistry", "atoms", "molecules"],
     type: "video",
-  },
-  {
-    id: "science-2",
-    title: "Physics Principles and Problems",
-    snippet:
-      "Comprehensive physics guide covering mechanics, thermodynamics, electricity, and more.",
-    url: "https://example.com/science/physics-principles",
-    keywords: [
-      "science",
-      "physics",
-      "mechanics",
-      "thermodynamics",
-      "electricity",
-    ],
-    type: "book",
   },
   {
     id: "language-1",
     title: "Grammar Essentials",
-    snippet:
-      "Master the fundamentals of grammar, sentence structure, and punctuation.",
+    snippet: "Master the fundamentals of grammar and sentence structure.",
     url: "https://example.com/language/grammar-essentials",
-    keywords: [
-      "language",
-      "grammar",
-      "writing",
-      "punctuation",
-      "sentence structure",
-    ],
+    keywords: ["language", "grammar", "writing", "punctuation"],
     type: "article",
-  },
-  {
-    id: "language-2",
-    title: "Effective Writing Techniques",
-    snippet:
-      "Learn how to improve your writing with style, clarity, and purpose.",
-    url: "https://example.com/language/writing-techniques",
-    keywords: ["language", "writing", "composition", "style", "clarity"],
-    type: "document",
-  },
-  {
-    id: "study-1",
-    title: "Memory Improvement Techniques",
-    snippet:
-      "Research-backed methods to enhance memory retention for better learning outcomes.",
-    url: "https://example.com/study/memory-techniques",
-    keywords: ["study", "memory", "retention", "learning", "techniques"],
-    type: "article",
-  },
-  {
-    id: "study-2",
-    title: "Effective Study Habits",
-    snippet:
-      "Develop productive study routines and habits for academic success.",
-    url: "https://example.com/study/effective-habits",
-    keywords: ["study", "habits", "productivity", "academic", "success"],
-    type: "video",
   },
 ];
 
@@ -199,35 +138,6 @@ function useAutoResizeTextarea({
   return { textareaRef, adjustHeight };
 }
 
-// Sample study agent responses based on keywords
-const studyResponses = {
-  math: [
-    "Mathematics is all about pattern recognition. Try to identify the underlying patterns in the problem.",
-    "When solving math problems, break them down into smaller steps and solve each step systematically.",
-    "Practice is key in mathematics. Try working through similar problems to build your intuition.",
-  ],
-  history: [
-    "When studying history, focus on understanding cause and effect relationships between events.",
-    "Creating a timeline can help you visualize the sequence of historical events and their connections.",
-    "Try to understand historical events in their context, considering the social, economic, and political factors.",
-  ],
-  science: [
-    "The scientific method is a powerful framework: observation, question, hypothesis, experiment, analysis, conclusion.",
-    "When studying scientific concepts, try to connect them to real-world examples or applications.",
-    "Visual aids like diagrams and models can help you understand complex scientific processes.",
-  ],
-  language: [
-    "Regular practice is essential for language learning. Try to use new vocabulary and grammar in context.",
-    "Reading widely in your target language exposes you to different styles and contexts.",
-    "Consider using spaced repetition techniques for vocabulary memorization.",
-  ],
-  study: [
-    "The Pomodoro technique (25 minutes of focused work followed by a 5-minute break) can improve productivity.",
-    "Active recall is more effective than passive review. Test yourself on the material rather than just rereading it.",
-    "Spaced repetition spreads your study sessions over time, which improves long-term retention.",
-  ],
-};
-
 // Function to search for relevant educational materials
 function searchEducationalMaterials(query: string): SearchResult[] {
   const lowerQuery = query.toLowerCase();
@@ -267,7 +177,7 @@ function searchEducationalMaterials(query: string): SearchResult[] {
 
   // Filter out low scores and sort by score
   return scoredResults
-    .filter((result) => result.score > 5)
+    .filter((result) => result.score > 3)
     .sort((a, b) => b.score - a.score)
     .slice(0, 3)
     .map(({ id, title, snippet, url, type }) => ({
@@ -279,10 +189,66 @@ function searchEducationalMaterials(query: string): SearchResult[] {
     }));
 }
 
-// Generate a response based on the user's message
-function generateStudyAgentResponse(message: string): string {
+// Sample study agent responses based on keywords
+const studyResponses = {
+  math: [
+    "Mathematics is all about pattern recognition. Try to identify the underlying patterns in the problem.",
+    "When solving math problems, break them down into smaller steps and solve each step systematically.",
+    "Practice is key in mathematics. Try working through similar problems to build your intuition.",
+  ],
+  history: [
+    "When studying history, focus on understanding cause and effect relationships between events.",
+    "Creating a timeline can help you visualize the sequence of historical events and their connections.",
+    "Try to understand historical events in their context, considering the social, economic, and political factors.",
+  ],
+  science: [
+    "The scientific method is a powerful framework: observation, question, hypothesis, experiment, analysis, conclusion.",
+    "When studying scientific concepts, try to connect them to real-world examples or applications.",
+    "Visual aids like diagrams and models can help you understand complex scientific processes.",
+  ],
+  language: [
+    "Regular practice is essential for language learning. Try to use new vocabulary and grammar in context.",
+    "Reading widely in your target language exposes you to different styles and contexts.",
+    "Consider using spaced repetition techniques for vocabulary memorization.",
+  ],
+  study: [
+    "The Pomodoro technique (25 minutes of focused work followed by a 5-minute break) can improve productivity.",
+    "Active recall is more effective than passive review. Test yourself on the material rather than just rereading it.",
+    "Spaced repetition spreads your study sessions over time, which improves long-term retention.",
+  ],
+};
+
+// Add casual conversation responses
+const casualResponses = [
+  "I'm here to help! Feel free to ask me about any study topic or just chat.",
+  "That's interesting! Is there something specific you'd like to learn about?",
+  "I enjoy our conversations! Let me know if you have any study-related questions.",
+  "I'm your friendly study companion, but I'm happy to chat about other topics too.",
+  "I'm designed to help with your studies, but I also enjoy casual conversation.",
+  "Taking breaks from studying is important! What would you like to talk about?",
+  "Sometimes a good conversation helps refresh the mind before diving back into studies.",
+];
+
+// Enhance the response generator to handle casual conversation
+function generateResponse(message: string): {
+  content: string;
+  type: "study" | "casual" | "search";
+} {
   const lowerMessage = message.toLowerCase();
-  let responseArray = studyResponses.study; // Default to general study tips
+
+  // Check if this is a search query
+  if (
+    lowerMessage.includes("search") ||
+    lowerMessage.includes("find") ||
+    lowerMessage.includes("looking for") ||
+    lowerMessage.includes("resources") ||
+    lowerMessage.includes("materials")
+  ) {
+    return {
+      content: "I'll help you find relevant materials.",
+      type: "search",
+    };
+  }
 
   // Check for subject-specific keywords
   if (
@@ -291,64 +257,182 @@ function generateStudyAgentResponse(message: string): string {
     lowerMessage.includes("algebra") ||
     lowerMessage.includes("equation")
   ) {
-    responseArray = studyResponses.math;
-  } else if (
+    const response =
+      studyResponses.math[
+        Math.floor(Math.random() * studyResponses.math.length)
+      ];
+    return { content: response, type: "study" };
+  }
+
+  if (
     lowerMessage.includes("history") ||
     lowerMessage.includes("civilization") ||
     lowerMessage.includes("century") ||
     lowerMessage.includes("war")
   ) {
-    responseArray = studyResponses.history;
-  } else if (
+    const response =
+      studyResponses.history[
+        Math.floor(Math.random() * studyResponses.history.length)
+      ];
+    return { content: response, type: "study" };
+  }
+
+  if (
     lowerMessage.includes("science") ||
     lowerMessage.includes("biology") ||
     lowerMessage.includes("chemistry") ||
     lowerMessage.includes("physics")
   ) {
-    responseArray = studyResponses.science;
-  } else if (
+    const response =
+      studyResponses.science[
+        Math.floor(Math.random() * studyResponses.science.length)
+      ];
+    return { content: response, type: "study" };
+  }
+
+  if (
     lowerMessage.includes("language") ||
     lowerMessage.includes("grammar") ||
     lowerMessage.includes("vocabulary") ||
     lowerMessage.includes("writing")
   ) {
-    responseArray = studyResponses.language;
+    const response =
+      studyResponses.language[
+        Math.floor(Math.random() * studyResponses.language.length)
+      ];
+    return { content: response, type: "study" };
   }
 
-  // Return a random response from the appropriate category
-  return responseArray[Math.floor(Math.random() * responseArray.length)];
+  if (
+    lowerMessage.includes("study") ||
+    lowerMessage.includes("learn") ||
+    lowerMessage.includes("exam") ||
+    lowerMessage.includes("test") ||
+    lowerMessage.includes("homework") ||
+    lowerMessage.includes("assignment")
+  ) {
+    const response =
+      studyResponses.study[
+        Math.floor(Math.random() * studyResponses.study.length)
+      ];
+    return { content: response, type: "study" };
+  }
+
+  // Handle greetings
+  if (
+    lowerMessage.includes("hello") ||
+    lowerMessage.includes("hi ") ||
+    lowerMessage === "hi" ||
+    lowerMessage.includes("hey") ||
+    lowerMessage.includes("greetings")
+  ) {
+    return {
+      content:
+        "Hello there! I'm your study and chat assistant. How can I help you today?",
+      type: "casual",
+    };
+  }
+
+  // Handle questions about the agent
+  if (
+    lowerMessage.includes("who are you") ||
+    lowerMessage.includes("what are you") ||
+    lowerMessage.includes("your name") ||
+    lowerMessage.includes("about you")
+  ) {
+    return {
+      content:
+        "I'm an AI study assistant designed to help with your learning journey. I can provide study tips, search for educational materials, or just chat with you!",
+      type: "casual",
+    };
+  }
+
+  // Default to casual conversation
+  const casualResponse =
+    casualResponses[Math.floor(Math.random() * casualResponses.length)];
+  return { content: casualResponse, type: "casual" };
 }
 
-export function VercelV0Chat() {
+export function StudyChatAgent() {
   const [value, setValue] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome",
       content:
-        "Hi there! I'm your Study Agent. How can I help you with your learning today? I can provide study tips or search for educational materials.",
+        "Hi there! I'm your Study Agent. I can help with learning, provide study tips, search for educational materials, or just chat with you. How can I help?",
       role: "assistant",
       timestamp: new Date(),
     },
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
     minHeight: 60,
     maxHeight: 200,
   });
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // Improved scroll to bottom function that respects auto vs smooth scrolling
+  const scrollToBottom = (smooth = true) => {
+    if (messagesEndRef.current && messagesContainerRef.current) {
+      if (smooth) {
+        messagesEndRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
+      } else {
+        messagesEndRef.current.scrollIntoView({
+          behavior: "auto",
+          block: "end",
+        });
+      }
+    }
   };
 
+  // Store current scroll position
+  const storeScrollPosition = () => {
+    if (messagesContainerRef.current) {
+      setScrollPosition(messagesContainerRef.current.scrollTop);
+    }
+  };
+
+  // Restore scroll position
+  const restoreScrollPosition = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = scrollPosition;
+    }
+  };
+
+  // Scroll handling on message changes
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    // Only scroll to bottom automatically on new messages if:
+    // 1. User is already at bottom (within 100px of bottom)
+    // 2. The new message is from the assistant
+    // 3. Loading state is active
+    if (messagesContainerRef.current) {
+      const container = messagesContainerRef.current;
+      const isNearBottom =
+        container.scrollHeight - container.clientHeight - container.scrollTop <
+        100;
+
+      const lastMessage = messages[messages.length - 1];
+      const isAssistantMessage =
+        lastMessage && lastMessage.role === "assistant";
+
+      if (isLoading || (isNearBottom && isAssistantMessage)) {
+        scrollToBottom(true);
+      }
+    }
+  }, [messages, isLoading]);
 
   const handleSendMessage = async () => {
     if (!value.trim()) return;
+
+    // Store scroll position before changes
+    storeScrollPosition();
 
     // Add user message
     const userMessage: ChatMessage = {
@@ -358,25 +442,29 @@ export function VercelV0Chat() {
       timestamp: new Date(),
     };
     setMessages((prev) => [...prev, userMessage]);
+
+    // Clear input without causing scroll jumps
     setValue("");
-    adjustHeight(true);
+
+    // Reset textarea height without affecting scroll
+    if (textareaRef.current) {
+      adjustHeight(true);
+    }
 
     // Show typing indicator
     setIsLoading(true);
 
-    // Check if this is a search query
-    const isSearchQuery =
-      value.toLowerCase().includes("search") ||
-      value.toLowerCase().includes("find") ||
-      value.toLowerCase().includes("looking for") ||
-      value.toLowerCase().includes("resources") ||
-      value.toLowerCase().includes("materials");
-
+    // Allow DOM to update before scrolling to prevent jumps
     setTimeout(() => {
-      // Generate response
-      const responseContent = generateStudyAgentResponse(userMessage.content);
+      scrollToBottom(true);
+    }, 0);
 
-      if (isSearchQuery) {
+    // Process the message
+    setTimeout(() => {
+      // Generate appropriate response
+      const response = generateResponse(userMessage.content);
+
+      if (response.type === "search") {
         setIsSearching(true);
 
         // Add searching message
@@ -412,7 +500,7 @@ export function VercelV0Chat() {
       } else {
         const assistantMessage: ChatMessage = {
           id: (Date.now() + 1).toString(),
-          content: responseContent,
+          content: response.content,
           role: "assistant",
           timestamp: new Date(),
         };
@@ -423,10 +511,21 @@ export function VercelV0Chat() {
     }, 1000);
   };
 
+  // Handle key events with strict prevention of unwanted scrolling
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
+      // Prevent default completely to avoid any scrolling
       e.preventDefault();
+      e.stopPropagation();
+
+      // Store scroll position
+      storeScrollPosition();
+
+      // Submit message
       handleSendMessage();
+
+      // Return false to ensure no additional handling
+      return false;
     }
   };
 
@@ -442,7 +541,7 @@ export function VercelV0Chat() {
       case "document":
         return <FileText className="h-4 w-4" />;
       default:
-        return <Link className="h-4 w-4" />;
+        return <ExternalLink className="h-4 w-4" />;
     }
   };
 
@@ -451,13 +550,19 @@ export function VercelV0Chat() {
       <div className="flex items-center gap-2">
         <BookOpen className="h-6 w-6 text-primary" />
         <h1 className="text-3xl font-bold text-black dark:text-white">
-          Study Chat Agent
+          Study & Chat Agent
         </h1>
       </div>
 
-      <div className="w-full max-w-3xl bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-md overflow-hidden">
-        {/* Messages display */}
-        <div className="h-[400px] overflow-y-auto p-4 space-y-4">
+      <div
+        ref={chatContainerRef}
+        className="w-full max-w-3xl bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-md overflow-hidden"
+      >
+        {/* Messages display - added ref to message container */}
+        <div
+          ref={messagesContainerRef}
+          className="h-[400px] overflow-y-auto p-4 space-y-4 scroll-smooth"
+        >
           {messages.map((message) => (
             <div key={message.id} className="space-y-2">
               <div
@@ -549,7 +654,7 @@ export function VercelV0Chat() {
                 adjustHeight();
               }}
               onKeyDown={handleKeyDown}
-              placeholder="Ask a question or search for materials..."
+              placeholder="Ask a question, chat, or search for materials..."
               className={cn(
                 "w-full px-4 py-3",
                 "resize-none",
@@ -566,7 +671,10 @@ export function VercelV0Chat() {
               }}
             />
             <Button
-              onClick={handleSendMessage}
+              onClick={(e) => {
+                e.preventDefault();
+                handleSendMessage();
+              }}
               disabled={!value.trim() || isLoading}
               className="absolute bottom-2 right-2 h-8 w-8 rounded-full p-0 cursor-pointer"
             >
@@ -577,9 +685,9 @@ export function VercelV0Chat() {
           <div className="flex items-center justify-between mt-2 px-2 text-xs text-gray-500">
             <div className="flex items-center space-x-1">
               <Sparkles className="h-3 w-3" />
-              <span>AI-powered responses with resource search</span>
+              <span>AI-powered responses with casual chat</span>
             </div>
-            <span>Try "search for calculus materials"</span>
+            <span>Shift + Enter for new line</span>
           </div>
         </div>
       </div>

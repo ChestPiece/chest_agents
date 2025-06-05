@@ -45,12 +45,19 @@ const Cta11 = ({
           </p>
           <div className="flex w-full flex-col justify-center gap-2 sm:flex-row">
             {buttons.secondary && (
-              <Button variant="outline" className="w-full sm:w-auto" asChild>
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto cursor-pointer"
+                asChild
+              >
                 <a href={buttons.secondary.url}>{buttons.secondary.text}</a>
               </Button>
             )}
             {buttons.primary && (
-              <Button className="w-full sm:w-auto" onClick={openLogin}>
+              <Button
+                className="w-full sm:w-auto cursor-pointer"
+                onClick={openLogin}
+              >
                 {buttons.primary.text}
               </Button>
             )}

@@ -55,7 +55,7 @@ function Footerdemo() {
               <Button
                 type="submit"
                 size="icon"
-                className="absolute right-1 top-1 h-8 w-8 rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105"
+                className="absolute right-1 top-1 h-8 w-8 rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105 cursor-pointer"
               >
                 <Send className="h-4 w-4" />
                 <span className="sr-only">Subscribe</span>
@@ -68,31 +68,31 @@ function Footerdemo() {
             <nav className="space-y-2 text-sm">
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block transition-colors hover:text-primary cursor-pointer"
               >
                 Home
               </a>
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block transition-colors hover:text-primary cursor-pointer"
               >
                 AI Solutions
               </a>
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block transition-colors hover:text-primary cursor-pointer"
               >
                 Use Cases
               </a>
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block transition-colors hover:text-primary cursor-pointer"
               >
                 Pricing
               </a>
               <a
                 href="#"
-                className="block transition-colors hover:text-primary"
+                className="block transition-colors hover:text-primary cursor-pointer"
               >
                 Contact
               </a>
@@ -116,7 +116,7 @@ function Footerdemo() {
                     <Button
                       variant="outline"
                       size="icon"
-                      className="rounded-full"
+                      className="rounded-full cursor-pointer"
                     >
                       <Facebook className="h-4 w-4" />
                       <span className="sr-only">Facebook</span>
@@ -133,7 +133,7 @@ function Footerdemo() {
                     <Button
                       variant="outline"
                       size="icon"
-                      className="rounded-full"
+                      className="rounded-full cursor-pointer"
                     >
                       <Twitter className="h-4 w-4" />
                       <span className="sr-only">Twitter</span>
@@ -150,7 +150,7 @@ function Footerdemo() {
                     <Button
                       variant="outline"
                       size="icon"
-                      className="rounded-full"
+                      className="rounded-full cursor-pointer"
                     >
                       <Instagram className="h-4 w-4" />
                       <span className="sr-only">Instagram</span>
@@ -167,7 +167,7 @@ function Footerdemo() {
                     <Button
                       variant="outline"
                       size="icon"
-                      className="rounded-full"
+                      className="rounded-full cursor-pointer"
                     >
                       <Linkedin className="h-4 w-4" />
                       <span className="sr-only">LinkedIn</span>
@@ -185,6 +185,7 @@ function Footerdemo() {
                 id="dark-mode"
                 checked={isDarkMode}
                 onCheckedChange={setIsDarkMode}
+                className="cursor-pointer"
               />
               <Moon className="h-4 w-4" />
               <Label htmlFor="dark-mode" className="sr-only">
@@ -198,13 +199,22 @@ function Footerdemo() {
             © 2024 Chest Piece AI. All rights reserved.
           </p>
           <nav className="flex gap-4 text-sm">
-            <a href="#" className="transition-colors hover:text-primary">
+            <a
+              href="#"
+              className="transition-colors hover:text-primary cursor-pointer"
+            >
               Privacy Policy
             </a>
-            <a href="#" className="transition-colors hover:text-primary">
+            <a
+              href="#"
+              className="transition-colors hover:text-primary cursor-pointer"
+            >
               Terms of Service
             </a>
-            <a href="#" className="transition-colors hover:text-primary">
+            <a
+              href="#"
+              className="transition-colors hover:text-primary cursor-pointer"
+            >
               Cookie Settings
             </a>
           </nav>

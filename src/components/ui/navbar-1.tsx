@@ -11,7 +11,7 @@ const Navbar1 = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const { openLogin } = useLogin();
-  const { user, supabase } = useSupabase();
+  const { user, signOut } = useSupabase();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -86,15 +86,15 @@ const Navbar1 = () => {
   };
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    await signOut();
   };
 
   return (
     <div className="flex justify-center w-full py-6 px-4 sticky top-0 z-50">
-      <div className="flex items-center justify-between px-6 py-3 bg-white dark:bg-black rounded-full shadow-lg w-full max-w-3xl relative z-10 backdrop-blur-sm">
-        <div className="flex items-center">
+      <div className="flex items-center justify-between px-8 py-4 bg-white/90 dark:bg-gray-900/95 rounded-full shadow-lg w-full max-w-4xl relative z-10 backdrop-blur-sm">
+        <div className="flex items-center cursor-pointer">
           <motion.div
-            className="mr-6"
+            className="mr-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             whileHover={{ scale: 1.05 }}
@@ -110,7 +110,7 @@ const Navbar1 = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-10 cursor-pointer">
           {navItems.map((item) => (
             <motion.div
               key={item.name}
@@ -120,7 +120,7 @@ const Navbar1 = () => {
             >
               <motion.button
                 onClick={() => scrollToSection(item.href, item.id)}
-                className="text-sm relative font-medium group overflow-hidden"
+                className="text-sm relative font-medium group overflow-hidden cursor-pointer"
                 whileTap={{ scale: 0.9 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
@@ -153,7 +153,7 @@ const Navbar1 = () => {
         </nav>
 
         {/* Desktop Auth Buttons */}
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden md:flex items-center gap-4">
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -162,24 +162,24 @@ const Navbar1 = () => {
             whileTap={{ scale: 0.9 }}
           >
             {user ? (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 rounded-full">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 rounded-full">
                   <User className="h-4 w-4" />
                   <span className="max-w-[120px] truncate">{user.email}</span>
                 </div>
                 <motion.button
                   onClick={handleSignOut}
-                  className="inline-flex items-center justify-center px-3 py-2 text-sm text-white bg-gradient-to-r from-red-500 to-red-600 rounded-full hover:shadow-lg transition-all relative overflow-hidden"
+                  className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black dark:text-white bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 hover:shadow-md transition-all relative overflow-hidden"
                   whileTap={{ scale: 0.95 }}
                 >
-                  <LogOut className="h-4 w-4 mr-1" />
+                  <LogOut className="h-4 w-4 mr-2" />
                   <span className="relative z-10">Logout</span>
                 </motion.button>
               </div>
             ) : (
               <motion.button
                 onClick={openLogin}
-                className="inline-flex items-center justify-center px-5 py-2 text-sm text-white bg-gradient-to-r from-primary to-[oklch(0.65_0.24_30)] rounded-full hover:shadow-lg transition-all relative overflow-hidden"
+                className="inline-flex items-center justify-center px-5 py-2 text-sm text-white bg-gradient-to-r from-primary to-[oklch(0.65_0.24_30)] rounded-full hover:shadow-lg transition-all relative overflow-hidden cursor-pointer"
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10">Get Started</span>
@@ -220,7 +220,7 @@ const Navbar1 = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 bg-white dark:bg-black z-50 pt-24 px-6 md:hidden backdrop-blur-sm"
+            className="fixed inset-0 bg-white dark:bg-gray-900 z-50 pt-24 px-6 md:hidden backdrop-blur-sm"
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
@@ -247,7 +247,7 @@ const Navbar1 = () => {
                 >
                   <motion.button
                     onClick={() => scrollToSection(item.href, item.id)}
-                    className={`text-base font-medium relative overflow-hidden ${
+                    className={`text-base font-medium relative overflow-hidden cursor-pointer ${
                       activeSection === item.id
                         ? "text-primary font-semibold"
                         : "text-gray-900 dark:text-white"
@@ -286,11 +286,11 @@ const Navbar1 = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
                 exit={{ opacity: 0, y: 20 }}
-                className="pt-2"
+                className="pt-4"
                 whileTap={{ scale: 0.95 }}
               >
                 {user ? (
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-2 px-4 py-3 text-base text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-800 rounded-xl">
                       <User className="h-5 w-5" />
                       <span className="truncate">{user.email}</span>
@@ -300,7 +300,7 @@ const Navbar1 = () => {
                         toggleMenu();
                         handleSignOut();
                       }}
-                      className="inline-flex items-center justify-center w-full px-5 py-3 text-base text-white bg-gradient-to-r from-red-500 to-red-600 rounded-full hover:shadow-lg transition-all"
+                      className="inline-flex items-center justify-center w-full px-5 py-3 text-base text-black dark:text-white bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                     >
                       <LogOut className="h-5 w-5 mr-2" />
                       <span>Logout</span>
@@ -312,7 +312,7 @@ const Navbar1 = () => {
                       toggleMenu();
                       openLogin();
                     }}
-                    className="inline-flex items-center justify-center w-full px-5 py-3 text-base text-white bg-gradient-to-r from-primary to-[oklch(0.65_0.24_30)] rounded-full hover:shadow-lg transition-all relative overflow-hidden"
+                    className="inline-flex items-center justify-center w-full px-5 py-3 text-base text-white bg-gradient-to-r from-primary to-[oklch(0.65_0.24_30)] rounded-full hover:shadow-lg transition-all relative overflow-hidden cursor-pointer"
                   >
                     <span className="relative z-10">Get Started</span>
 

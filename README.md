@@ -34,6 +34,10 @@ This project uses environment variables for configuration. To set them up:
 NEXT_PUBLIC_API_URL=https://api.example.com
 API_KEY=your_api_key_here
 
+# Supabase Configuration (Required)
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+
 # Database
 DATABASE_URL=postgresql://username:password@localhost:5432/database_name
 
@@ -87,6 +91,7 @@ yarn start
 - Framer Motion
 - Tailwind CSS
 - TypeScript
+- Supabase (Authentication and Database)
 
 ## Learn More
 

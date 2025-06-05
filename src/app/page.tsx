@@ -1,7 +1,7 @@
 "use client";
 
 import { Hero } from "@/components/ui/animated-hero";
-import { VercelV0Chat } from "@/components/ui/v0-ai-chat";
+import { StudyChatAgent } from "@/components/ui/study-chat-agent";
 import { Navbar1 } from "@/components/ui/navbar-1";
 import { FeaturesSectionWithHoverEffects } from "@/components/feature-section-with-hover-effects";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
@@ -54,7 +54,7 @@ export default function Home() {
       <main className="flex-1 w-full mx-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Hero />
-          <VercelV0Chat />
+          <StudyChatAgent />
           <FeaturesSectionWithHoverEffects />
         </div>
         <AgentShowcase />
