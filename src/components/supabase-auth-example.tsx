@@ -249,28 +249,7 @@ export default function SupabaseAuthExample() {
       }}
       className="relative bg-white dark:bg-black rounded-lg shadow-lg p-8 max-w-md w-full mx-auto"
     >
-      {/* Close button */}
-      <motion.button
-        whileHover={{ scale: 1.1, rotate: 90 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={closeLogin}
-        className="absolute right-4 top-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </motion.button>
+      {/* No close button needed - removed to prevent duplicate X buttons */}
 
       {/* Success Popup */}
       <AnimatePresence>

@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconChevronDown } from "@tabler/icons-react";
+import { ContentWrapper } from "@/components/ui/section-wrapper";
+import { fadeIn, staggerContainer } from "@/lib/animation-variants";
+import { AnimatedButton } from "./animated-button";
 
 const FaqItem = ({
   question,
@@ -16,7 +19,13 @@ const FaqItem = ({
   toggleOpen: () => void;
 }) => {
   return (
-    <div className="border-b border-gray-200 dark:border-gray-800 last:border-none">
+    <motion.div
+      className="border-b border-gray-200 dark:border-gray-800 last:border-none"
+      whileHover={{
+        backgroundColor: "rgba(0, 0, 0, 0.02)",
+        transition: { duration: 0.2 },
+      }}
+    >
       <button
         className="flex w-full items-center justify-between py-5 text-left"
         onClick={toggleOpen}
@@ -26,7 +35,7 @@ const FaqItem = ({
         </h3>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
           className="flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 p-1"
         >
           <IconChevronDown className="h-5 w-5 text-gray-500 dark:text-gray-400" />
@@ -38,7 +47,12 @@ const FaqItem = ({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{
+              duration: 0.3,
+              type: "spring",
+              damping: 25,
+              stiffness: 120,
+            }}
             className="overflow-hidden"
           >
             <div className="pb-5 text-gray-600 dark:text-gray-300">
@@ -47,7 +61,7 @@ const FaqItem = ({
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
@@ -88,34 +102,37 @@ export function FaqSection() {
   };
 
   return (
-    <div id="faqs" className="w-full py-16">
-      <div className="container mx-auto px-4">
+    <div id="faqs" className="w-full">
+      <ContentWrapper>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
+          variants={fadeIn("up")}
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
             Frequently Asked Questions
           </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-primary to-[oklch(0.65_0.24_30)] mx-auto rounded-full mb-4"></div>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Everything you need to know about our AI agents and how they can
             transform your business operations.
           </p>
         </motion.div>
 
-        <div className="max-w-3xl mx-auto bg-white dark:bg-black rounded-xl shadow-md overflow-hidden">
+        <motion.div
+          className="max-w-3xl mx-auto bg-white dark:bg-black rounded-xl shadow-md overflow-hidden"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          whileHover={{ boxShadow: "0 10px 30px rgba(0, 0, 0, 0.05)" }}
+          transition={{ duration: 0.3 }}
+        >
           <div className="p-6 md:p-8">
             {faqData.map((faq, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
+              <motion.div key={index} variants={fadeIn("up", index * 0.1)}>
                 <FaqItem
                   question={faq.question}
                   answer={faq.answer}
@@ -125,26 +142,15 @@ export function FaqSection() {
               </motion.div>
             ))}
           </div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <p className="text-gray-600 dark:text-gray-300">
-            Still have questions?{" "}
-            <a
-              href="#"
-              className="text-primary hover:text-primary/90 font-medium"
-            >
-              Contact our AI specialists
-            </a>
-          </p>
         </motion.div>
-      </div>
+
+        <motion.div variants={fadeIn("up", 0.5)} className="text-center mt-12">
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Still have questions?
+          </p>
+          <AnimatedButton>Contact our AI specialists</AnimatedButton>
+        </motion.div>
+      </ContentWrapper>
     </div>
   );
 }

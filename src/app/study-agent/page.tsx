@@ -2,16 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createBrowserClient } from "@supabase/ssr";
 import { Navbar1 } from "@/components/ui/navbar-1";
 import { Footerdemo } from "@/components/ui/footer-section";
-import { FullStudyChatAgent } from "@/components/ui/full-study-chat-agent";
+import { StudyChatAgent } from "@/components/ui/study-chat-agent";
 import { useLogin } from "@/context/login-context";
 import { Loader2 } from "lucide-react";
 
 export default function StudyAgentPage() {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+  );
   const { openLogin } = useLogin();
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -62,7 +65,7 @@ export default function StudyAgentPage() {
       <Navbar1 />
       <main className="flex-1 bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
         {isAuthenticated ? (
-          <FullStudyChatAgent />
+          <StudyChatAgent />
         ) : (
           <div className="container mx-auto px-4 py-16 text-center">
             <h1 className="text-3xl font-bold mb-4">Authentication Required</h1>

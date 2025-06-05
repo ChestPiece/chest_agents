@@ -74,7 +74,7 @@ export function AgentShowcase() {
   };
 
   return (
-    <div id="team" className="py-12 bg-gray-50 dark:bg-black">
+    <div id="agents" className="py-12 bg-gray-50 dark:bg-black">
       <div className="container mx-auto px-4">
         <div className="text-center mb-6 md:mb-10">
           <div className="inline-flex items-center justify-center px-3 py-1.5 mb-5 rounded-full bg-primary/10 dark:bg-primary/20 text-primary text-sm font-medium">

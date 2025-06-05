@@ -19,7 +19,7 @@ const Navbar1 = () => {
   const navItems = useMemo(
     () => [
       { name: "Home", href: "#", id: "home" },
-      { name: "Team", href: "#team", id: "team" },
+      { name: "AI Agents", href: "#agents", id: "agents" },
       { name: "Testimonials", href: "#testimonials", id: "testimonials" },
       { name: "FAQs", href: "#faqs", id: "faqs" },
     ],
@@ -91,7 +91,7 @@ const Navbar1 = () => {
 
   return (
     <div className="flex justify-center w-full py-6 px-4 sticky top-0 z-50">
-      <div className="flex items-center justify-between px-8 py-4 bg-white/90 dark:bg-gray-900/95 rounded-full shadow-lg w-full max-w-4xl relative z-10 backdrop-blur-sm">
+      <div className="flex items-center justify-between px-8 py-4 bg-white dark:bg-black rounded-full shadow-lg w-full max-w-4xl relative z-10 backdrop-blur-sm">
         <div className="flex items-center cursor-pointer">
           <motion.div
             className="mr-8"
@@ -220,7 +220,7 @@ const Navbar1 = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 bg-white dark:bg-gray-900 z-50 pt-24 px-6 md:hidden backdrop-blur-sm"
+            className="fixed inset-0 bg-white dark:bg-black z-50 pt-24 px-6 md:hidden backdrop-blur-sm"
             initial={{ opacity: 0, x: "100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}

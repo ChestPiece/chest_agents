@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import {
   IconCloud,
@@ -8,6 +10,17 @@ import {
   IconApi,
   IconCode,
 } from "@tabler/icons-react";
+import { motion } from "framer-motion";
+import {
+  fadeIn,
+  revealFromDirection,
+  staggerContainer,
+} from "@/lib/animation-variants";
+import {
+  SectionWrapper,
+  ContentWrapper,
+} from "@/components/ui/section-wrapper";
+import { AnimatedCard } from "@/components/ui/animated-card";
 
 export function FeaturesSectionWithHoverEffects() {
   const features = [
@@ -60,12 +73,33 @@ export function FeaturesSectionWithHoverEffects() {
       icon: <IconCode />,
     },
   ];
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 py-10 max-w-7xl mx-auto">
-      {features.map((feature, index) => (
-        <Feature key={feature.title} {...feature} index={index} />
-      ))}
-    </div>
+    <SectionWrapper className="py-20" id="features">
+      <ContentWrapper>
+        <motion.div
+          className="text-center mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeIn("up")}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+            Key Features
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-primary to-[oklch(0.65_0.24_30)] mx-auto rounded-full"></div>
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+            Our AI agents come packed with powerful features to help transform
+            your business
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {features.map((feature, index) => (
+            <Feature key={feature.title} {...feature} index={index} />
+          ))}
+        </div>
+      </ContentWrapper>
+    </SectionWrapper>
   );
 }
 
@@ -81,31 +115,31 @@ const Feature = ({
   index: number;
 }) => {
   return (
-    <div
-      className={cn(
-        "flex flex-col lg:border-r py-10 relative group/feature dark:border-black",
-        (index === 0 || index === 4) && "lg:border-l dark:border-black",
-        index < 4 && "lg:border-b dark:border-black"
-      )}
+    <AnimatedCard
+      delayIndex={index}
+      hoverEffect={index % 2 === 0 ? "lift" : "glow"}
+      className="p-6"
     >
-      {index < 4 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-neutral-100 dark:from-black to-transparent pointer-events-none" />
-      )}
-      {index >= 4 && (
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-neutral-100 dark:from-black to-transparent pointer-events-none" />
-      )}
-      <div className="mb-4 relative z-10 px-10 text-neutral-600 dark:text-neutral-400">
-        {icon}
-      </div>
-      <div className="text-lg font-bold mb-2 relative z-10 px-10">
-        <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-black group-hover/feature:bg-primary transition-all duration-200 origin-center" />
-        <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-neutral-800 dark:text-white">
+      <div className="flex flex-col h-full">
+        <motion.div
+          className="mb-4 text-primary"
+          variants={revealFromDirection("up")}
+        >
+          {icon}
+        </motion.div>
+        <motion.h3
+          className="text-lg font-bold mb-2 text-gray-900 dark:text-white"
+          variants={revealFromDirection("up")}
+        >
           {title}
-        </span>
+        </motion.h3>
+        <motion.p
+          className="text-sm text-gray-600 dark:text-gray-300"
+          variants={revealFromDirection("up")}
+        >
+          {description}
+        </motion.p>
       </div>
-      <p className="text-sm text-neutral-600 dark:text-neutral-300 max-w-xs relative z-10 px-10">
-        {description}
-      </p>
-    </div>
+    </AnimatedCard>
   );
 };

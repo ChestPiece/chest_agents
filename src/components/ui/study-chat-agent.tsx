@@ -14,7 +14,14 @@ import {
   ExternalLink,
   BookMarked,
   FileText,
+  Lock,
+  LogIn,
 } from "lucide-react";
+import { useSupabase } from "@/context/supabase-context";
+import { useLogin } from "@/context/login-context";
+import { AnimatedButton } from "./animated-button";
+import { motion } from "framer-motion";
+import { fadeIn } from "@/lib/animation-variants";
 
 interface UseAutoResizeTextareaProps {
   minHeight: number;
@@ -374,6 +381,8 @@ export function StudyChatAgent() {
     minHeight: 60,
     maxHeight: 200,
   });
+  const { user } = useSupabase();
+  const { openLogin } = useLogin();
 
   // Improved scroll to bottom function that respects auto vs smooth scrolling
   const scrollToBottom = (smooth = true) => {
@@ -556,12 +565,12 @@ export function StudyChatAgent() {
 
       <div
         ref={chatContainerRef}
-        className="w-full max-w-3xl bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-md overflow-hidden"
+        className="w-full max-w-3xl bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800 shadow-md overflow-hidden"
       >
         {/* Messages display - added ref to message container */}
         <div
           ref={messagesContainerRef}
-          className="h-[400px] overflow-y-auto p-4 space-y-4 scroll-smooth"
+          className="h-[400px] overflow-y-auto p-4 space-y-4 scroll-smooth bg-white dark:bg-black"
         >
           {messages.map((message) => (
             <div key={message.id} className="space-y-2">
@@ -576,7 +585,7 @@ export function StudyChatAgent() {
                     "max-w-[80%] rounded-lg px-4 py-2",
                     message.role === "user"
                       ? "bg-primary text-primary-foreground"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                      : "bg-gray-100 dark:bg-black dark:border dark:border-gray-800 text-gray-800 dark:text-gray-200"
                   )}
                 >
                   {message.content}
@@ -592,9 +601,9 @@ export function StudyChatAgent() {
                   {message.searchResults.map((result) => (
                     <div
                       key={result.id}
-                      className="flex bg-gray-50 dark:bg-gray-800/50 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 max-w-[90%]"
+                      className="flex bg-gray-50 dark:bg-black dark:border dark:border-gray-800 rounded-lg overflow-hidden border border-gray-200 max-w-[90%]"
                     >
-                      <div className="bg-gray-100 dark:bg-gray-700 p-3 flex items-center justify-center">
+                      <div className="bg-gray-100 dark:bg-gray-900 p-3 flex items-center justify-center">
                         {getResourceIcon(result.type)}
                       </div>
                       <div className="p-3 flex-1">
@@ -622,7 +631,7 @@ export function StudyChatAgent() {
 
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg px-4 py-2">
+              <div className="bg-gray-100 dark:bg-black dark:border dark:border-gray-800 text-gray-800 dark:text-gray-200 rounded-lg px-4 py-2">
                 <div className="flex items-center space-x-2">
                   {isSearching ? (
                     <>
@@ -644,38 +653,49 @@ export function StudyChatAgent() {
         </div>
 
         {/* Input area */}
-        <div className="border-t border-gray-200 dark:border-gray-800 p-3">
-          <div className="relative bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-            <Textarea
-              ref={textareaRef}
-              value={value}
-              onChange={(e) => {
-                setValue(e.target.value);
-                adjustHeight();
-              }}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask a question, chat, or search for materials..."
-              className={cn(
-                "w-full px-4 py-3",
-                "resize-none",
-                "bg-transparent",
-                "border-none",
-                "text-gray-900 dark:text-white text-sm",
-                "focus:outline-none",
-                "focus-visible:ring-0 focus-visible:ring-offset-0",
-                "placeholder:text-gray-500 placeholder:text-sm",
-                "min-h-[60px]"
-              )}
-              style={{
-                overflow: "hidden",
-              }}
-            />
+        <div className="border-t border-gray-200 dark:border-gray-800 p-3 bg-white dark:bg-black">
+          <div className="relative bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+            {user ? (
+              <Textarea
+                ref={textareaRef}
+                value={value}
+                onChange={(e) => {
+                  setValue(e.target.value);
+                  adjustHeight();
+                }}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask a question, chat, or search for materials..."
+                className={cn(
+                  "w-full px-4 py-3",
+                  "resize-none",
+                  "bg-transparent",
+                  "border-none",
+                  "text-gray-900 dark:text-white text-sm",
+                  "focus:outline-none",
+                  "focus-visible:ring-0 focus-visible:ring-offset-0",
+                  "placeholder:text-gray-500 placeholder:text-sm",
+                  "min-h-[60px]"
+                )}
+                style={{
+                  overflow: "hidden",
+                }}
+              />
+            ) : (
+              <div
+                className="w-full px-4 py-3 flex items-center cursor-pointer"
+                onClick={openLogin}
+              >
+                <div className="flex-1 text-gray-500 text-sm">
+                  Sign in to interact with the study agent...
+                </div>
+              </div>
+            )}
             <Button
               onClick={(e) => {
                 e.preventDefault();
-                handleSendMessage();
+                user ? handleSendMessage() : openLogin();
               }}
-              disabled={!value.trim() || isLoading}
+              disabled={(!user || !value.trim()) && user}
               className="absolute bottom-2 right-2 h-8 w-8 rounded-full p-0 cursor-pointer"
             >
               <Send className="h-4 w-4" />

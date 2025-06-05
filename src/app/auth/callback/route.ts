@@ -8,18 +8,20 @@ export async function GET(request: Request) {
 
   if (code) {
     const cookieStore = cookies();
+
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
         cookies: {
-          getAll() {
-            return cookieStore.getAll();
+          get(name) {
+            return cookieStore.get(name)?.value;
           },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, options);
-            });
+          set(name, value, options) {
+            cookieStore.set(name, value, options);
+          },
+          remove(name, options) {
+            cookieStore.set(name, "", { ...options, maxAge: 0 });
           },
         },
       }
@@ -30,5 +32,5 @@ export async function GET(request: Request) {
   }
 
   // URL to redirect to after sign in process completes
-  return NextResponse.redirect(new URL("/dashboard", request.url));
+  return NextResponse.redirect(new URL("/", process.env.NEXT_PUBLIC_SITE_URL));
 }

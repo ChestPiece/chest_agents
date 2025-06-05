@@ -12,6 +12,26 @@ import { AgentShowcase } from "@/components/ui/agent-showcase";
 import { useEffect } from "react";
 import { useLogin } from "@/context/login-context";
 import { useSearchParams } from "next/navigation";
+import {
+  SectionWrapper,
+  ContentWrapper,
+} from "@/components/ui/section-wrapper";
+import { motion } from "framer-motion";
+import { pageVariants } from "@/lib/animation-variants";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { AnimatedStats } from "@/components/ui/animated-stats";
+import {
+  Users,
+  Brain,
+  Clock,
+  Building,
+  MessageSquare,
+  HelpCircle,
+  Home as HomeIcon,
+  Sparkles,
+} from "lucide-react";
+import { FloatingActionButton } from "@/components/ui/floating-action-button";
+import { smoothScrollTo } from "@/lib/smooth-scroll";
 
 export default function Home() {
   const { openLogin } = useLogin();
@@ -48,53 +68,162 @@ export default function Home() {
     },
   ];
 
+  const quickNavItems = [
+    {
+      icon: <HomeIcon className="h-4 w-4" />,
+      label: "Home",
+      onClick: () => smoothScrollTo("#", 0),
+    },
+    {
+      icon: <Sparkles className="h-4 w-4" />,
+      label: "Features",
+      onClick: () => smoothScrollTo("#features", 80),
+    },
+    {
+      icon: <Users className="h-4 w-4" />,
+      label: "Agents",
+      onClick: () => smoothScrollTo("#agents", 80),
+    },
+    {
+      icon: <MessageSquare className="h-4 w-4" />,
+      label: "Testimonials",
+      onClick: () => smoothScrollTo("#testimonials", 80),
+    },
+    {
+      icon: <HelpCircle className="h-4 w-4" />,
+      label: "FAQs",
+      onClick: () => smoothScrollTo("#faqs", 80),
+    },
+  ];
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <motion.div
+      className="flex flex-col min-h-screen"
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={pageVariants}
+    >
       <Navbar1 />
       <main className="flex-1 w-full mx-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Hero />
-          <StudyChatAgent />
-          <FeaturesSectionWithHoverEffects />
-        </div>
-        <AgentShowcase />
-        <div className="bg-gradient-to-r from-[oklch(0.97_0.05_60)] to-[oklch(0.97_0.03_30)] dark:from-black dark:to-gray-900 py-16 mt-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionWrapper className="bg-background">
+          <ContentWrapper>
+            <Hero />
+          </ContentWrapper>
+        </SectionWrapper>
+
+        <SectionWrapper className="bg-background py-10 lg:py-20">
+          <ContentWrapper>
+            <StudyChatAgent />
+          </ContentWrapper>
+        </SectionWrapper>
+
+        <AnimatedStats
+          title="Our Impact"
+          description="Discover how our AI agents are transforming businesses and education"
+          stats={[
+            {
+              value: 10000,
+              label: "Active Users",
+              icon: <Users />,
+              suffix: "+",
+            },
+            {
+              value: 95,
+              label: "User Satisfaction",
+              icon: <Brain />,
+              suffix: "%",
+            },
+            {
+              value: 80,
+              label: "Time Saved",
+              icon: <Clock />,
+              suffix: "%",
+            },
+            {
+              value: 500,
+              label: "Businesses Powered",
+              icon: <Building />,
+              suffix: "+",
+            },
+          ]}
+        />
+
+        <FeaturesSectionWithHoverEffects />
+
+        <SectionWrapper className="bg-background">
+          <AgentShowcase />
+        </SectionWrapper>
+
+        <SectionWrapper
+          className="bg-gradient-to-r from-[oklch(0.97_0.05_60)] to-[oklch(0.97_0.03_30)] dark:from-black dark:to-gray-900 py-16"
+          direction="up"
+          delay={0.1}
+        >
+          <ContentWrapper>
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+              <motion.h2
+                className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
                 What Our Clients Say
-              </h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-primary to-[oklch(0.65_0.24_30)] mx-auto rounded-full"></div>
+              </motion.h2>
+              <motion.div
+                className="w-20 h-1 bg-gradient-to-r from-primary to-[oklch(0.65_0.24_30)] mx-auto rounded-full"
+                initial={{ width: 0 }}
+                whileInView={{ width: 80 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+              ></motion.div>
             </div>
-            <div className="bg-white dark:bg-black rounded-2xl shadow-lg p-4 md:p-8">
+            <motion.div
+              className="bg-white dark:bg-black rounded-2xl shadow-lg p-4 md:p-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
               <AnimatedTestimonials
                 testimonials={testimonials}
                 autoplay={true}
               />
-            </div>
-          </div>
-        </div>
-        <div className="bg-gray-50 dark:bg-black py-16">
+            </motion.div>
+          </ContentWrapper>
+        </SectionWrapper>
+
+        <SectionWrapper className="bg-gray-50 dark:bg-black py-16" delay={0.1}>
           <FaqSection />
-        </div>
-        <div className="flex justify-center items-center w-full">
-          <Cta11
-            heading="Ready to Streamline Your Business with AI Agents?"
-            description="Join forward-thinking businesses using our AI agents to automate tasks, increase productivity, and drive innovation."
-            buttons={{
-              primary: {
-                text: "Get Started",
-                url: "#",
-              },
-              secondary: {
-                text: "Book a Demo",
-                url: "#",
-              },
-            }}
-          />
-        </div>
+        </SectionWrapper>
+
+        <SectionWrapper className="bg-background py-10">
+          <ContentWrapper className="flex justify-center items-center w-full">
+            <Cta11
+              heading="Ready to Streamline Your Business with AI Agents?"
+              description="Join forward-thinking businesses using our AI agents to automate tasks, increase productivity, and drive innovation."
+              buttons={{
+                primary: {
+                  text: "Get Started",
+                  url: "#",
+                },
+                secondary: {
+                  text: "Book a Demo",
+                  url: "#",
+                },
+              }}
+            />
+          </ContentWrapper>
+        </SectionWrapper>
       </main>
       <Footerdemo />
-    </div>
+      <ScrollToTop />
+      <FloatingActionButton
+        items={quickNavItems}
+        position="bottom-right"
+        mainIcon={<Sparkles className="h-5 w-5" />}
+      />
+    </motion.div>
   );
 }

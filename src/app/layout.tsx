@@ -6,6 +6,8 @@ import ModalContainer from "@/components/modal-container";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeScript } from "@/lib/theme-script";
 import { SupabaseProvider } from "@/context/supabase-context";
+import PageTransition from "@/components/layout/page-transition";
+import { ClientScript } from "./client-script";
 
 const geistSans = GeistSans;
 const geistMono = GeistMono;
@@ -31,8 +33,9 @@ export default function RootLayout({
         <ThemeProvider>
           <SupabaseProvider>
             <LoginProvider>
-              {children}
+              <PageTransition>{children}</PageTransition>
               <ModalContainer />
+              <ClientScript />
             </LoginProvider>
           </SupabaseProvider>
         </ThemeProvider>

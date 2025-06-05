@@ -13,21 +13,25 @@ export async function createServerSupabaseClient() {
 
   return createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
-      getAll() {
-        return cookieStore.getAll();
+      get(name) {
+        return cookieStore.get(name)?.value;
       },
-      setAll(cookiesToSet) {
+      set(name, value, options) {
         try {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          );
-        } catch {
-          // The `setAll` method was called from a Server Component.
-          // This can be ignored if you have middleware refreshing
-          // user sessions.
+          cookieStore.set(name, value, options);
+        } catch (error) {
+          // This can be ignored if you have middleware refreshing user sessions
+          console.error("Error setting cookie:", error);
+        }
+      },
+      remove(name, options) {
+        try {
+          cookieStore.set(name, "", { ...options, maxAge: 0 });
+        } catch (error) {
+          // This can be ignored if you have middleware refreshing user sessions
+          console.error("Error removing cookie:", error);
         }
       },
     },
   });
 }
- 
